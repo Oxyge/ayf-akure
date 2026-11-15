@@ -1,0 +1,221 @@
+<%- include('partials/header', { title: 'Home' }) %>
+
+<section class="hero" id="top">
+  <% slides.forEach((s, i) => { %>
+  <div class="hero-slide <%= i===0 ? 'active' : '' %>" data-index="<%= i %>">
+    <div class="hero-bg" <% if (s.image_url) { %>style="background-image:url('<%= s.image_url %>')"<% } %>></div>
+    <div class="hero-content">
+      <% if (s.eyebrow) { %><div class="hero-eyebrow" data-anim="eyebrow"><%= s.eyebrow %></div><% } %>
+      <h1 data-anim="heading"><%= s.heading %></h1>
+      <% if (s.body) { %><p class="lede" data-anim="lede"><%= s.body %></p><% } %>
+      <% if (s.button_label) { %><div class="hero-buttons" data-anim="buttons"><a href="<%= s.button_link || '#' %>" class="btn btn-gold"><%= s.button_label %></a></div><% } %>
+    </div>
+  </div>
+  <% }) %>
+  <div class="hero-particles" id="heroParticles"></div>
+  <div class="hero-emblem"><%- include('partials/emblem') %></div>
+  <div class="hero-ticks" id="heroTicks"></div>
+  <a href="#marquee" class="hero-scroll" aria-label="Scroll down"><span></span></a>
+</section>
+
+<div class="marquee-band" id="marquee">
+  <div class="marquee-track">
+    <span>Towards the Perfect Man</span>
+    <span class="dot">&#8226;</span>
+    <span>One Fellowship</span>
+    <span class="dot">&#8226;</span>
+    <span>One Purpose</span>
+    <span class="dot">&#8226;</span>
+    <span>One Vision</span>
+    <span class="dot">&#8226;</span>
+    <span>Diocese of Akure</span>
+    <span class="dot">&#8226;</span>
+    <span>Towards the Perfect Man</span>
+    <span class="dot">&#8226;</span>
+    <span>One Fellowship</span>
+    <span class="dot">&#8226;</span>
+    <span>One Purpose</span>
+    <span class="dot">&#8226;</span>
+    <span>One Vision</span>
+    <span class="dot">&#8226;</span>
+    <span>Diocese of Akure</span>
+    <span class="dot">&#8226;</span>
+  </div>
+</div>
+
+<section class="history-home">
+  <div class="wrap history-home-grid reveal">
+    <figure class="history-portrait">
+      <div class="arch-back" aria-hidden="true"></div>
+      <div class="arch-frame">
+        <% if (settings.history_photo_url) { %><img src="<%= settings.history_photo_url %>" alt="AYF Akure Diocese"><% } %>
+      </div>
+      <% if (settings.diocese_crest_url) { %>
+      <div class="crest-badge"><img src="<%= settings.diocese_crest_url %>" alt="Diocese of Akure crest"><span><strong>MR. FESTUS OLALEKAN ONI</strong><em>Diocesan Youth President</em></span></div>
+      <% } %>
+    </figure>
+    <div class="history-copy">
+      <div class="kicker">Our story</div>
+      <h2>History of AYF Akure Diocese</h2>
+      <div class="history-org"><%= settings.site_name %></div>
+      <p class="history-lead"><%= settings.history_intro %></p>
+      <div class="history-more"><p><%= settings.history_intro_2 %></p></div>
+      <div class="history-actions">
+        <a href="/about#history" class="btn btn-solid">Read the full story</a>
+        <a href="/about#vision" class="link-arrow">Vision &amp; mission <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--paper-dim);">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow">What Drives Us</div>
+      <h2>Vision, Mission &amp; Purpose</h2>
+    </div>
+  </div>
+  <div class="wrap reveal">
+    <div class="vmp-grid">
+      <article class="vmp-card"><div class="vmp-top"><span class="vmp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 12S5.5 5 12 5s10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12z"/><circle cx="12" cy="12" r="3"/></svg></span><span class="vmp-num">V</span></div><h3>Our Vision</h3><span class="vmp-rule"></span><p><%= settings.vision %></p></article>
+      <article class="vmp-card"><div class="vmp-top"><span class="vmp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg></span><span class="vmp-num">M</span></div><h3>Our Mission</h3><span class="vmp-rule"></span><p><%= settings.mission %></p></article>
+      <article class="vmp-card"><div class="vmp-top"><span class="vmp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-8-4.8-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.200-8 11-8 11z"/></svg></span><span class="vmp-num">P</span></div><h3>Our Purpose</h3><span class="vmp-rule"></span><p><%= settings.purpose %></p></article>
+    </div>
+  </div>
+</section>
+
+<section id="programmes-preview">
+  <div class="wrap">
+    <div class="section-head reveal"><div class="eyebrow">What's On</div><h2>Upcoming Programmes</h2></div>
+    <% if (programmes.length) { %>
+    <div class="event-grid reveal">
+      <% programmes.forEach(p => { %>
+        <%- include('partials/prog-card', { p, showLink: true }) %>
+      <% }) %>
+    </div>
+    <% } else { %><div class="empty-state reveal">No programmes scheduled yet — check back soon.</div><% } %>
+    <div class="section-foot reveal"><a href="/programmes" class="btn btn-dark-outline">View All Programmes</a></div>
+  </div>
+</section>
+
+<section class="news-band">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Stay Informed</div>
+      <h2>News &amp; Announcements</h2>
+      <p>Get the latest news, preaching, events and announcements to keep you informed and involved at AYF.</p>
+    </div>
+    <% if (news.length) { %>
+    <div class="news-grid reveal">
+      <div class="news-feature">
+        <a href="/news/<%= news[0].id %>"><div class="news-thumb" <% if (news[0].image_url) { %>style="background-image:url('<%= news[0].image_url %>')"<% } %>></div></a>
+        <div class="news-cat"><%= news[0].category %></div>
+        <h3><a href="/news/<%= news[0].id %>"><%= news[0].title %></a></h3>
+        <% if (news[0].excerpt) { %><p><%= news[0].excerpt %></p><% } %>
+        <div class="news-date"><%= new Date(news[0].published_at).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) %></div>
+      </div>
+      <div class="news-list">
+        <% news.slice(1).forEach(n => { %>
+        <div class="news-list-item">
+          <a href="/news/<%= n.id %>" class="news-list-thumb" <% if (n.image_url) { %>style="background-image:url('<%= n.image_url %>')"<% } %>></a>
+          <div class="news-list-body">
+            <div class="news-cat"><%= n.category %></div>
+            <h4><a href="/news/<%= n.id %>"><%= n.title %></a></h4>
+            <div class="news-date"><%= new Date(n.published_at).toLocaleDateString('en-GB', { day:'2-digit', month:'short' }) %></div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+    <% } else { %><div class="empty-state reveal">No news posted yet.</div><% } %>
+    <div class="section-foot reveal"><a href="/news" class="btn btn-dark-outline">View All News</a></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head center reveal"><div class="eyebrow">Leadership</div><h2>Meet Our Fathers in God</h2></div>
+    <div class="lead-grid reveal">
+      <% leaders.forEach(l => { %>
+      <div class="lead-card">
+        <div class="lead-photo" <% if (l.photo_url) { %>style="background-image:url('<%= l.photo_url %>')"<% } %>></div>
+        <h4><%= l.name %></h4>
+        <div class="lead-role"><%= l.role %></div>
+        <p><%= l.bio %></p>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="quote-band">
+  <div class="wave-top" style="color:var(--paper);"><%- include('partials/wave') %></div>
+  <% quotes.forEach((q, i) => { %>
+  <div class="quote-slide<%= i === 0 ? ' active' : '' %>" <% if (q.photo_url) { %>style="background-image:url('<%= q.photo_url %>')"<% } %>>
+    <div class="wrap quote-band-inner reveal">
+      <span class="quote-mark">&ldquo;</span>
+      <p class="quote-text"><%= q.quote %></p>
+      <div class="quote-attr"><%= q.name %><% if (q.role) { %>, <%= q.role %><% } %></div>
+    </div>
+  </div>
+  <% }) %>
+  <% if (quotes.length > 1) { %><div class="quote-dots" id="quoteDots"></div><% } %>
+  <div class="wave-bottom" style="color:var(--paper-dim);"><%- include('partials/wave') %></div>
+</section>
+
+<section class="donate" id="donate">
+  <div class="wrap donate-inner reveal">
+    <div class="eyebrow">Support Our Project</div>
+    <h2>Be Part of AYF Development by Sowing a Seed</h2>
+    <div class="verse-block">
+      <%= settings.donate_verse %>
+      <cite><%= settings.donate_verse_ref %></cite>
+    </div>
+    <a href="/donate" class="btn btn-solid">Donate</a>
+  </div>
+</section>
+
+<% if (videos.length) { %>
+<section class="video-section">
+  <div class="wrap">
+    <div class="section-head reveal"><div class="eyebrow">Watch</div><h2>Latest Videos on Our Fellowship YouTube</h2></div>
+    <div class="video-showcase reveal">
+      <a href="<%= videos[0].video_url %>" data-video="<%= videos[0].video_url %>" class="video-feature">
+        <div class="video-feature-thumb" <% if (videos[0].thumbnail_url) { %>style="background-image:url('<%= videos[0].thumbnail_url %>')"<% } %>>
+          <div class="play-btn play-btn-lg">&#9658;</div>
+        </div>
+        <div class="video-feature-body">
+          <h3><%= videos[0].title %></h3>
+          <span class="news-date"><%= new Date(videos[0].published_at).toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' }) %></span>
+        </div>
+      </a>
+      <% if (videos.length > 1) { %>
+      <div class="video-side-list">
+        <% videos.slice(1).forEach(v => { %>
+        <a href="<%= v.video_url %>" data-video="<%= v.video_url %>" class="video-side-item">
+          <div class="video-side-thumb" <% if (v.thumbnail_url) { %>style="background-image:url('<%= v.thumbnail_url %>')"<% } %>><div class="play-btn">&#9658;</div></div>
+          <div>
+            <h4><%= v.title %></h4>
+            <span class="news-date"><%= new Date(v.published_at).toLocaleDateString('en-GB', { month:'short', year:'numeric' }) %></span>
+          </div>
+        </a>
+        <% }) %>
+      </div>
+      <% } %>
+    </div>
+    <div class="section-foot reveal"><a href="<%= settings.youtube_url || '/media#videos' %>" class="btn btn-dark-outline">View Our YouTube Channel</a></div>
+  </div>
+</section>
+<% } %>
+
+<section class="cta-band">
+  <div class="wave-top" style="color:var(--paper-dim);"><%- include('partials/wave') %></div>
+  <div class="wrap reveal">
+    <h2><%= settings.cta_band_heading %></h2>
+    <p><%= settings.cta_band_body %></p>
+    <a href="<%= settings.whatsapp_url || '/contact' %>" class="btn btn-solid"><%= settings.cta_band_button_label %></a>
+  </div>
+  <div class="wave-bottom" style="color:var(--forest-deep);"><%- include('partials/wave') %></div>
+</section>
+
+<%- include('partials/footer') %>

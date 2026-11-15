@@ -1,0 +1,60 @@
+<%- include('partials/header', { title: 'Meet Our Executives' }) %>
+
+<div class="page-header">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; Meet Our Executives</div>
+    <div class="kicker">2024&ndash;2027 Executive Council</div>
+    <h1>Our Diocesan Executives</h1>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <% if (executives.length) { %>
+    <div class="exec-grid reveal">
+      <% executives.forEach(e => { %>
+      <div class="exec-card">
+        <div class="exec-photo" <% if (e.photo_url) { %>style="background-image:url('<%= e.photo_url %>')"<% } %>>
+          <div class="person-info">
+            <h4><%= e.name %></h4>
+            <div class="exec-role"><%= e.role %></div>
+            <div class="exec-contact">
+              <% if (e.phone) { %><a href="tel:<%= e.phone %>"><%= e.phone %></a><% } %>
+              <% if (e.email) { %><a href="mailto:<%= e.email %>"><%= e.email %></a><% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+    <% } else { %><div class="empty-state reveal">The Executive Council list will be published here shortly.</div><% } %>
+  </div>
+</section>
+
+<% if (pastPresidents.length) { %>
+<section id="past-presidents" style="background:var(--paper-dim);">
+  <div class="wrap">
+    <div class="section-head center reveal"><div class="eyebrow">Standing on Their Shoulders</div><h2>Past Presidents</h2></div>
+    <div class="lead-grid reveal">
+      <% pastPresidents.forEach(p => { %>
+      <div class="lead-card">
+        <div class="lead-photo" <% if (p.photo_url) { %>style="background-image:url('<%= p.photo_url %>')"<% } %>>
+          <div class="person-info">
+            <h4><%= p.name %></h4>
+            <div class="lead-role"><%= p.tenure %></div>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<section class="section-foot" style="padding-top:0;">
+  <div class="wrap" style="text-align:center;">
+    <a href="/patrons" class="btn btn-dark-outline">Meet Our Patrons &amp; Patroness &rarr;</a>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,12 @@
+<%
+  const initial = String(p.name || '?').replace(/^(the|ven\.?|revd\.?|rev\.?|dr\.?|mr\.?|mrs\.?|prof\.?|hon\.?|engr\.?|chief|sir|lady)\s+/i, '').charAt(0).toUpperCase();
+%>
+<article class="pt-card" tabindex="0">
+  <div class="pt-frame">
+    <% if (p.photo_url) { %><img src="<%= p.photo_url %>" alt="<%= p.name %>" loading="lazy"><% } else { %><span class="pt-initial" aria-hidden="true"><%= initial %></span><% } %>
+    <div class="person-info">
+      <h4><%= p.name %></h4>
+      <div class="pt-role"><%= p.role %></div>
+    </div>
+  </div>
+</article>

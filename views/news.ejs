@@ -1,0 +1,47 @@
+<%- include('partials/header', { title: 'News & Events' }) %>
+
+<div class="page-header">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; News &amp; Events</div>
+    <div class="eyebrow">Stay Informed</div>
+    <h1>News &amp; Announcements</h1>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <% if (news.length) { %>
+    <div class="news-card-grid reveal">
+      <% news.forEach(n => { %>
+      <div class="news-card">
+        <a href="/news/<%= n.id %>"><div class="news-thumb" <% if (n.image_url) { %>style="background-image:url('<%= n.image_url %>')"<% } %>></div></a>
+        <div class="news-cat"><%= n.category %></div>
+        <h4><a href="/news/<%= n.id %>"><%= n.title %></a></h4>
+        <% if (n.excerpt) { %><p style="font-size:.9rem;"><%= n.excerpt %></p><% } %>
+        <div class="news-date"><%= new Date(n.published_at).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) %></div>
+      </div>
+      <% }) %>
+    </div>
+    <% } else { %><div class="empty-state reveal">No news posted yet.</div><% } %>
+  </div>
+</section>
+
+<% if (articles.length) { %>
+<section style="background:var(--paper-dim);">
+  <div class="wrap">
+    <div class="section-head reveal"><div class="eyebrow">Word &amp; Message</div><h2>Articles &amp; Preaching</h2></div>
+    <div class="news-card-grid reveal" style="grid-template-columns:repeat(2,1fr);">
+      <% articles.forEach(a => { %>
+      <div class="news-card">
+        <div class="news-thumb" <% if (a.image_url) { %>style="background-image:url('<%= a.image_url %>')"<% } %>></div>
+        <div class="news-cat">Article</div>
+        <h4><%= a.title %></h4>
+        <div class="news-date">By <%= a.author %> &middot; <%= new Date(a.published_at).toLocaleDateString('en-GB', { month:'short', year:'numeric' }) %></div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<%- include('partials/footer') %>

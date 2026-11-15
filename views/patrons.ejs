@@ -1,0 +1,57 @@
+<%- include('partials/header', { title: 'Our Patrons & Patroness' }) %>
+<%
+  const isFemale = (p) => /patroness/i.test(p.role || '');
+  const patronList = patrons.filter(p => !isFemale(p));
+  const patronessList = patrons.filter(isFemale);
+%>
+
+<div class="page-header patrons-header">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; Our Patrons &amp; Patroness</div>
+    <div class="kicker">Standing With Us</div>
+    <h1>Our Diocesan Patrons &amp; Patroness</h1>
+    <p class="page-intro">Fathers and mothers in the Lord who stand with the fellowship, supporting it with their counsel, prayers and resources.</p>
+  </div>
+</div>
+
+<section class="patrons-section">
+  <div class="wrap">
+    <% if (patrons.length) { %>
+      <% if (patronList.length) { %>
+      <div class="pt-group reveal">
+        <div class="pt-group-head"><h2>Our Patrons</h2><span class="pt-count"><%= patronList.length %></span></div>
+        <div class="pt-grid"><% patronList.forEach(p => { %><%- include('partials/patron-card', { p }) %><% }) %></div>
+      </div>
+      <% } %>
+      <% if (patronessList.length) { %>
+      <div class="pt-group reveal">
+        <div class="pt-group-head"><h2>Our Patroness<%= patronessList.length > 1 ? 'es' : '' %></h2><span class="pt-count"><%= patronessList.length %></span></div>
+        <div class="pt-grid"><% patronessList.forEach(p => { %><%- include('partials/patron-card', { p }) %><% }) %></div>
+      </div>
+      <% } %>
+      <p class="pt-hint">Hover over, or tap, a photo to see the name and title.</p>
+    <% } else { %><div class="empty-state reveal">Our Patrons &amp; Patroness will be published here shortly.</div><% } %>
+  </div>
+</section>
+
+<% if (pastPresidents.length) { %>
+<section id="past-presidents" style="background:var(--paper-dim);">
+  <div class="wrap">
+    <div class="section-head center reveal"><div class="eyebrow">Standing on Their Shoulders</div><h2>Past Presidents</h2></div>
+    <div class="lead-grid reveal">
+      <% pastPresidents.forEach(p => { %>
+      <div class="lead-card">
+        <div class="lead-photo" <% if (p.photo_url) { %>style="background-image:url('<%= p.photo_url %>')"<% } %>>
+          <div class="person-info">
+            <h4><%= p.name %></h4>
+            <div class="lead-role"><%= p.tenure %></div>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<%- include('partials/footer') %>

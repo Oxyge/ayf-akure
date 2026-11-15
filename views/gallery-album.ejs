@@ -1,0 +1,22 @@
+<%- include('partials/header', { title: albumName }) %>
+
+<div class="page-header">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; <a href="/media#gallery">Media</a> &nbsp;/&nbsp; <%= albumName %></div>
+    <div class="kicker">Photo Album</div>
+    <h1><%= albumName %></h1>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="gallery-grid reveal">
+      <% items.forEach(g => { %>
+      <div class="g-item" data-lightbox="<%= g.image_url %>" style="background-image:url('<%= g.image_url %>')"></div>
+      <% }) %>
+    </div>
+    <a href="/media#gallery" class="btn btn-dark-outline reveal" style="margin-top:40px;display:inline-flex;">&larr; All Albums</a>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

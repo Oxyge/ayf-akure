@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><%= typeof title !== 'undefined' ? title + ' — ' + settings.site_name : settings.site_name + ' — Diocese of Akure' %></title>
+<meta name="description" content="<%= settings.tagline %> — the official website of the Akure Anglican Youth Fellowship, Diocese of Akure.">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="/">
+      <span class="brand-mark">
+        <% if (settings.logo_url) { %><img src="<%= settings.logo_url %>" alt="<%= settings.site_name %> logo">
+        <% } else { %><%- include('emblem') %><% } %>
+      </span>
+      <span class="brand-text">
+        <span class="name"><%= settings.site_name %></span>
+        <span class="sub">Diocese of Akure</span>
+      </span>
+    </a>
+
+    <nav class="top-nav" aria-label="Primary">
+      <div class="nav-item has-dropdown">
+        <a href="/about" class="<%= page==='about' || page==='executives' || page==='patrons' ? 'active' : '' %>">About</a>
+        <div class="dropdown">
+          <a href="/about">Our Story</a>
+          <a href="/about#vision">Vision &amp; Mission</a>
+          <div class="dropdown-item has-submenu">
+            <span>Leadership</span>
+            <div class="submenu">
+              <a href="/executives">Our Executives</a>
+              <a href="/patrons">Our Patrons &amp; Patroness</a>
+              <a href="/executives#past-presidents">Past Presidents</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="/programmes" class="<%= page==='programmes' ? 'active' : '' %>">Programmes</a>
+      <a href="/news" class="<%= page==='news' ? 'active' : '' %>">News</a>
+      <div class="nav-item has-dropdown">
+        <a href="/media" class="<%= page==='media' || page==='magazine' || page==='newsletter' ? 'active' : '' %>">Media</a>
+        <div class="dropdown">
+          <a href="/media#gallery">Photo Gallery</a>
+          <a href="/media#videos">Video Gallery</a>
+          <div class="dropdown-item has-submenu">
+            <span>Publications</span>
+            <div class="submenu">
+              <a href="/magazine">Magazine</a>
+              <a href="/newsletter">Newsletter</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="/archdeaconries" class="<%= page==='archdeaconries' ? 'active' : '' %>">Archdeaconries</a>
+      <% (typeof navPages !== 'undefined' ? navPages : []).forEach(np => { %><a href="/p/<%= np.slug %>" class="<%= page==='custom-'+np.slug ? 'active' : '' %>"><%= np.title %></a>
+      <% }) %>
+      <a href="/contact" class="<%= page==='contact' ? 'active' : '' %>">Contact</a>
+      <a href="/donate" class="btn btn-gold nav-donate">Donate</a>
+    </nav>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+      <span>Menu</span>
+      <span class="menu-toggle-bars"><i></i><i></i></span>
+    </button>
+  </div>
+</header>
+
+<div class="overlay-nav" id="overlayNav">
+  <div class="wrap overlay-nav-top">
+    <a class="brand" href="/">
+      <span class="brand-mark"><%- include('emblem') %></span>
+      <span class="brand-text"><span class="name"><%= settings.site_name %></span></span>
+    </a>
+    <button class="overlay-close" id="overlayClose" aria-label="Close menu">Close &times;</button>
+  </div>
+  <nav class="overlay-links" aria-label="Mobile">
+    <details>
+      <summary>About</summary>
+      <a href="/about">Our Story</a>
+      <a href="/about#vision">Vision &amp; Mission</a>
+      <details>
+        <summary>Leadership</summary>
+        <a href="/executives">Our Executives</a>
+        <a href="/patrons">Our Patrons &amp; Patroness</a>
+        <a href="/executives#past-presidents">Past Presidents</a>
+      </details>
+    </details>
+    <a href="/programmes">Programmes</a>
+    <a href="/news">News &amp; Events</a>
+    <details>
+      <summary>Media</summary>
+      <a href="/media#gallery">Photo Gallery</a>
+      <a href="/media#videos">Video Gallery</a>
+      <details>
+        <summary>Publications</summary>
+        <a href="/magazine">Magazine</a>
+        <a href="/newsletter">Newsletter</a>
+      </details>
+    </details>
+    <a href="/archdeaconries">Archdeaconries</a>
+    <% (typeof navPages !== 'undefined' ? navPages : []).forEach(np => { %><a href="/p/<%= np.slug %>"><%= np.title %></a>
+    <% }) %>
+    <a href="/contact">Contact</a>
+  </nav>
+  <div class="overlay-foot">
+    <a href="/donate" class="btn btn-gold">Donate</a>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<%- include('partials/header', { title: 'About Us' }) %>
+
+<div class="page-header">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; About Us</div>
+    <div class="eyebrow">Who We Are</div>
+    <h1>About Akure Anglican Youth Fellowship</h1>
+  </div>
+</div>
+
+<section id="history">
+  <div class="wrap">
+    <div class="section-head reveal"><div class="eyebrow">Our Story</div><h2>History of AYF Akure Diocese</h2></div>
+    <div class="history-grid reveal">
+      <div class="history-image" <% if (article && article.image_url) { %>style="background-image:url('<%= article.image_url %>')"<% } %>></div>
+      <div class="timeline">
+        <div class="t-item"><div class="yr">Founding</div><h4>The Akure Diocesan Youth Fellowship</h4>
+          <p>What became the Anglican Youth Fellowship Akure Diocese is the offspring of the Akure Diocesan Youth Fellowship. The pioneer president was Bro. Henry Olugbenga Bankole Ajayi (now Venerable, and current Director of the Youth Board), alongside Youth Chaplain, the now-retired Venerable Francis Oludare Orogun.</p></div>
+        <div class="t-item"><div class="yr">2001&ndash;2009</div><h4>A fellowship carried by volunteers</h4>
+          <p>Ven. Adeyemi served as Youth Chaplain from 2001, then Revd. Paul Ogunsakin, then Revd. Roy Fakorede. There was no standing Diocesan Youth Executive; volunteers across the Archdeaconries organised the December camps each year.</p></div>
+        <div class="t-item"><div class="yr">2012</div><h4>First Diocesan Youth Executive</h4>
+          <p>Bro Olubunmi Afuye was installed as Diocesan President, with a full executive team, commissioned at the 2012 camp.</p></div>
+        <div class="t-item"><div class="yr">2013</div><h4>Renamed Anglican Youth Fellowship</h4>
+          <p>Following a directive from the Primate's office, all Diocesan youth groups adopted the name Anglican Youth Fellowship, attending the 2013 National Conference at Umuahia as AYF for the first time.</p></div>
+        <div class="t-item"><div class="yr">2013&ndash;Present</div><h4>Successive leadership</h4>
+          <p>Presidents since: Bro. Olubunmi Afuye (2013&ndash;2018), Dr. Oluwafemi Abe (2018&ndash;2021), and Bro. Festus Olalekan Oni (2021&ndash;date).</p></div>
+      </div>
+    </div>
+    <% if (article) { %>
+    <div class="prose reveal" style="margin-top:40px;">
+      <%- article.body %>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<section id="vision" style="background:var(--paper-dim);">
+  <div class="wrap">
+    <div class="section-head center reveal"><div class="eyebrow">What Drives Us</div><h2>Vision, Mission &amp; Purpose</h2></div>
+  </div>
+  <div class="wrap reveal">
+    <div class="vmp-grid">
+      <article class="vmp-card"><div class="vmp-top"><span class="vmp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 12S5.5 5 12 5s10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12z"/><circle cx="12" cy="12" r="3"/></svg></span><span class="vmp-num">V</span></div><h3>Our Vision</h3><span class="vmp-rule"></span><p><%= settings.vision %></p></article>
+      <article class="vmp-card"><div class="vmp-top"><span class="vmp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg></span><span class="vmp-num">M</span></div><h3>Our Mission</h3><span class="vmp-rule"></span><p><%= settings.mission %></p></article>
+      <article class="vmp-card"><div class="vmp-top"><span class="vmp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-8-4.8-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.200-8 11-8 11z"/></svg></span><span class="vmp-num">P</span></div><h3>Our Purpose</h3><span class="vmp-rule"></span><p><%= settings.purpose %></p></article>
+    </div>
+  </div>
+</section>
+
+<section class="bishop-band">
+  <div class="wrap bishop-grid reveal">
+    <div class="bishop-photo" <% if (settings.bishop_photo_url) { %>style="background-image:url('<%= settings.bishop_photo_url %>')"<% } %>></div>
+    <div>
+      <div class="eyebrow">Under Diocesan Oversight</div>
+      <h2><%= settings.bishop_name %></h2>
+      <p><%= settings.bishop_title %></p>
+      <p>AYF Akure serves as the youth arm of the Anglican Diocese of Akure, working in fellowship with the Diocesan Bishop and clergy across every Archdeaconry.</p>
+    </div>
+    <% if (settings.diocese_crest_url) { %>
+    <div class="diocese-crest"><img src="<%= settings.diocese_crest_url %>" alt="Anglican Diocese of Akure crest"></div>
+    <% } %>
+  </div>
+</section>
+
+<section id="leadership">
+  <div class="wrap">
+    <div class="section-head center reveal"><div class="eyebrow">Leadership</div><h2>Meet Our Fathers in God</h2></div>
+    <div class="lead-grid reveal">
+      <% leaders.forEach(l => { %>
+      <div class="lead-card">
+        <div class="lead-photo" <% if (l.photo_url) { %>style="background-image:url('<%= l.photo_url %>')"<% } %>></div>
+        <h4><%= l.name %></h4>
+        <div class="lead-role"><%= l.role %></div>
+        <p><%= l.bio %></p>
+      </div>
+      <% }) %>
+    </div>
+    <div class="section-foot reveal">
+      <a href="/executives" class="btn btn-dark-outline">Meet Our Full Executive Council &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,31 @@
+<%- include('partials/header', { title: item.name }) %>
+
+<div class="page-header">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; <a href="/archdeaconries">Archdeaconries</a> &nbsp;/&nbsp; <%= item.name %></div>
+    <div class="eyebrow"><%= item.location %></div>
+    <h1><%= item.name %></h1>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="history-grid reveal">
+      <% if (item.image_url) { %>
+      <div class="history-image" style="background-image:url('<%= item.image_url %>')"></div>
+      <% } else { %>
+      <div class="history-image">
+        <%- include('partials/church-art', { variant: (item.id || 0) }) %>
+      </div>
+      <% } %>
+      <div class="prose">
+        <p><%= item.description %></p>
+        <% if (item.leadership) { %><div class="contact-block"><h4>Leadership</h4><p><%= item.leadership %></p></div><% } %>
+        <% if (item.contact) { %><div class="contact-block"><h4>Contact</h4><p><%= item.contact %></p></div><% } %>
+      </div>
+    </div>
+    <a href="/archdeaconries" class="btn btn-dark-outline reveal" style="margin-top:36px;display:inline-flex;">&larr; All Archdeaconries</a>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

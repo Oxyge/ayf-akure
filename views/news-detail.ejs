@@ -1,0 +1,26 @@
+<%- include('partials/header', { title: item.title }) %>
+
+<div class="page-header">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; <a href="/news">News</a> &nbsp;/&nbsp; <%= item.title %></div>
+    <div class="eyebrow"><%= item.category %></div>
+    <h1><%= item.title %></h1>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <% if (item.image_url) { %>
+    <div class="history-image reveal" style="aspect-ratio:16/8;background-image:url('<%= item.image_url %>');margin-bottom:36px;"></div>
+    <% } %>
+    <div class="prose reveal">
+      <p style="font-size:.85rem;color:var(--leaf);font-weight:600;"><%= new Date(item.published_at).toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' }) %></p>
+      <% item.body.split(/\n\n+/).forEach(para => { %>
+        <p><%= para %></p>
+      <% }) %>
+    </div>
+    <a href="/news" class="btn btn-dark-outline reveal">&larr; Back to News</a>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

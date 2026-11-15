@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | AYF Akure</title>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body" data-owner="<%= owner ? 1 : 0 %>" data-perms="<%= perms.join(',') %>">
+<%
+  const I = {
+    overview: '<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',
+    settings: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+    slides: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+    news: '<path d="M4 5h13a2 2 0 0 1 2 2v12H6a2 2 0 0 1-2-2z"/><path d="M19 9h2v8a2 2 0 0 1-2 2M8 9h7M8 13h7"/>',
+    programmes: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/>',
+    people: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.2a6.5 6.5 0 0 1 3.5 5.8"/>',
+    user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+    book: '<path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 21.5A2.5 2.5 0 0 1 6.5 19H20"/>',
+    mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+    pin: '<path d="M12 21s7-6.2 7-11.5a7 7 0 1 0-14 0C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
+    image: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="m21 16-5-5-9 9"/>',
+    video: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m10 9.5 5 2.5-5 2.5z"/>',
+    file: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',
+    inbox: '<path d="M3 13l3-8h12l3 8v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M3 13h5l1 3h6l1-3h5"/>',
+    globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+    users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M17 11l2 2 3.500-4"/>',
+    key: '<circle cx="8" cy="15" r="4"/><path d="M10.800 12.200 20 3M17 6l3 3M14.500 8.500l2 2"/>',
+    logout: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>'
+  };
+  const icon = (n) => '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + I[n] + '</svg>';
+  const groups = [
+    { title: null, items: [['overview','Overview','overview'],['messages','Messages','inbox']] },
+    { title: 'Website', items: [['settings','Site settings','settings'],['slides','Homepage slider','slides'],['pages','Custom pages','file'],['news','News','news'],['articles','Articles & preaching','book'],['programmes','Programmes','programmes'],['archdeaconries','Archdeaconries','pin']] },
+    { title: 'People', items: [['leaders','Fathers in God','user'],['executives','Diocesan executives','people'],['patrons','Patrons & Patroness','people'],['pastPresidents','Past presidents','people']] },
+    { title: 'Media & reading', items: [['media','Media library','image'],['gallery','Gallery','image'],['videos','Videos','video'],['magazines','Magazine','book'],['newsletters','Newsletter','mail'],['publications','Publications','file']] },
+    { title: 'Administration', items: [['users','Users & access','users']], ownerOnly: true }
+  ].map(g => ({ ...g, items: g.items.filter(it => it[0] === 'overview' || (it[0] === 'users' ? owner : perms.includes(it[0]))) })).filter(g => g.items.length && (!g.ownerOnly || owner));
+%>
+  <div class="bg-glow" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="admin-shell">
+    <aside class="admin-sidebar glass">
+      <div class="ws">
+        <div class="ws-logo"><% if (settings && settings.logo_url) { %><img src="<%= settings.logo_url %>" alt=""><% } else { %>AYF<% } %></div>
+        <div class="ws-text"><strong><%= (settings && settings.site_name) ? settings.site_name : 'AYF Akure' %></strong><span>Admin workspace</span></div>
+      </div>
+      <nav class="admin-nav" aria-label="Admin sections">
+        <% groups.forEach(g => { %>
+          <% if (g.title) { %><div class="nav-group"><%= g.title %></div><% } %>
+          <% g.items.forEach(it => { %>
+            <button type="button" class="admin-tab<%= it[0] === 'overview' ? ' active' : '' %>" data-tab="<%= it[0] %>" data-label="<%= it[1] %>"><%- icon(it[2]) %><span><%= it[1] %></span><% if (it[0] === 'messages') { %><em class="nav-badge" id="nav-msg-badge" hidden>0</em><% } %></button>
+          <% }) %>
+        <% }) %>
+      </nav>
+      <div class="side-foot">
+        <a class="admin-tab" href="/" target="_blank" rel="noopener"><%- icon('globe') %><span>View website</span></a>
+        <button type="button" class="admin-tab" id="change-pw"><%- icon('key') %><span>Change password</span></button>
+        <form method="POST" action="/admin/logout"><button class="admin-tab" type="submit"><%- icon('logout') %><span>Log out</span></button></form>
+      </div>
+    </aside>
+
+    <main class="admin-main glass" id="main">
+      <div class="main-top">
+        <div>
+          <h1 id="page-title">Good day, <%= adminName %></h1>
+          <p id="page-sub">Here is what is happening on the AYF Akure website.</p>
+        </div>
+        <div class="top-actions">
+          <a class="pill-btn" href="/" target="_blank" rel="noopener">View site</a>
+          <div class="avatar-chip" title="<%= adminName %>"><%= adminName.slice(0,1).toUpperCase() %></div>
+        </div>
+      </div>
+      <div id="panel-overview" class="admin-panel"></div>
+      <% ['settings','media','slides','pages','news','articles','programmes','leaders','executives','patrons','pastPresidents','magazines','newsletters','archdeaconries','gallery','videos','publications','messages','users'].forEach(k => { %>
+      <div id="panel-<%= k %>" class="admin-panel" hidden></div>
+      <% }) %>
+    </main>
+
+    <aside class="admin-rail" id="admin-rail" aria-label="Quick figures"></aside>
+  </div>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

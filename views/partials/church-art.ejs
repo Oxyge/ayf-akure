@@ -1,0 +1,51 @@
+<%
+/* Original line-art "Anglican church" illustration used in place of a photo
+   for Archdeaconries that don't have one yet. `variant` (0-3) cycles the
+   background tint and the small architectural details so the grid doesn't
+   feel repetitive. Pass `variant` as a local when including. */
+const v = (typeof variant === 'number' ? variant : 0) % 4;
+%>
+<div class="arch-thumb-art arch-thumb-art-<%= v %>">
+  <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- ground -->
+    <line x1="18" y1="140" x2="182" y2="140" stroke="currentColor" stroke-width="1" opacity=".35"/>
+    <!-- side wings -->
+    <rect x="34" y="104" width="34" height="36" fill="none" stroke="currentColor" stroke-width="1.3"/>
+    <rect x="132" y="104" width="34" height="36" fill="none" stroke="currentColor" stroke-width="1.3"/>
+    <path d="M34 104 L51 90 L68 104" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+    <path d="M132 104 L149 90 L166 104" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+    <% if (v % 2 === 0) { %>
+    <rect x="43" y="115" width="12" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+    <rect x="145" y="115" width="12" height="20" fill="none" stroke="currentColor" stroke-width="1"/>
+    <% } else { %>
+    <path d="M49 135V119 A6 6 0 0 1 61 119 V135 Z" fill="none" stroke="currentColor" stroke-width="1"/>
+    <path d="M139 135V119 A6 6 0 0 1 151 119 V135 Z" fill="none" stroke="currentColor" stroke-width="1"/>
+    <% } %>
+    <!-- nave / central tower -->
+    <rect x="70" y="66" width="60" height="74" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    <!-- pointed roof -->
+    <path d="M64 66 L100 26 L136 66 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    <!-- spire on top -->
+    <rect x="96" y="10" width="8" height="18" fill="none" stroke="currentColor" stroke-width="1.3"/>
+    <path d="M96 10 L100 2 L104 10 Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+    <!-- cross -->
+    <line x1="100" y1="2" x2="100" y2="-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" transform="translate(0,10)"/>
+    <line x1="95" y1="4" x2="105" y2="4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" transform="translate(0,10)"/>
+    <% if (v < 2) { %>
+    <!-- rose window -->
+    <circle cx="100" cy="52" r="11" fill="none" stroke="currentColor" stroke-width="1.3"/>
+    <circle cx="100" cy="52" r="4" fill="none" stroke="currentColor" stroke-width="1"/>
+    <path d="M100 41V63M89 52H111M92.8 43.8L107.2 60.2M107.2 43.8L92.8 60.2" stroke="currentColor" stroke-width=".7"/>
+    <% } else { %>
+    <!-- lancet window -->
+    <path d="M92 63V47 A8 8 0 0 1 108 47 V63 Z" fill="none" stroke="currentColor" stroke-width="1.3"/>
+    <line x1="100" y1="47" x2="100" y2="63" stroke="currentColor" stroke-width=".7"/>
+    <% } %>
+    <!-- arched door -->
+    <path d="M88 140V118 A12 12 0 0 1 112 118 V140 Z" fill="none" stroke="currentColor" stroke-width="1.4"/>
+    <line x1="100" y1="118" x2="100" y2="140" stroke="currentColor" stroke-width=".8"/>
+    <!-- steps -->
+    <line x1="82" y1="140" x2="118" y2="140" stroke="currentColor" stroke-width="1"/>
+    <line x1="78" y1="144" x2="122" y2="144" stroke="currentColor" stroke-width="1" opacity=".6"/>
+  </svg>
+</div>

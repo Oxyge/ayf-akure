@@ -1,0 +1,33 @@
+<%
+  const _d = p.event_date ? new Date(p.event_date + 'T00:00:00') : null;
+  const _today = new Date(); _today.setHours(0,0,0,0);
+  const _valid = _d && !isNaN(_d);
+  const _past = _valid && _d < _today;
+  const _days = _valid ? Math.round((_d - _today) / 86400000) : null;
+  const _status = !_valid ? '' : _past ? 'Past event' : _days === 0 ? 'Today' : _days === 1 ? 'Tomorrow' : _days <= 30 ? 'In ' + _days + ' days' : 'Upcoming';
+  const _mapQ = p.venue ? 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(p.venue) : '';
+%>
+<article class="event-card<%= _past ? ' is-past' : '' %>">
+  <div class="event-media"<% if (p.image_url) { %> style="background-image:url('<%= p.image_url %>')"<% } %>>
+    <% if (!p.image_url) { %>
+    <svg class="event-art" viewBox="0 0 120 120" aria-hidden="true"><path d="M52 8h16v36h36v16H68v52H52V60H16V44h36z" fill="currentColor"/></svg>
+    <% } %>
+    <% if (_valid) { %>
+    <div class="event-date" aria-label="<%= _d.toDateString() %>">
+      <b><%= String(_d.getDate()).padStart(2, '0') %></b>
+      <span><%= _d.toLocaleDateString('en-GB', { month: 'short' }).toUpperCase() %></span>
+      <i><%= _d.getFullYear() %></i>
+    </div>
+    <% } %>
+    <% if (_status) { %><span class="event-status"><%= _status %></span><% } %>
+  </div>
+  <div class="event-body">
+    <h3><%= p.title %></h3>
+    <ul class="event-meta">
+      <% if (p.event_time) { %><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><%= p.event_time %></li><% } %>
+      <% if (p.venue) { %><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5a7 7 0 1 0-14 0C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><a href="<%= _mapQ %>" target="_blank" rel="noopener"><%= p.venue %></a></li><% } %>
+    </ul>
+    <% if (p.description) { %><p><%= p.description %></p><% } %>
+    <% if (typeof showLink !== 'undefined' && showLink) { %><a href="/programmes" class="event-link">View details <span aria-hidden="true">&rarr;</span></a><% } %>
+  </div>
+</article>

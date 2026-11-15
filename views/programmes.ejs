@@ -1,0 +1,39 @@
+<%- include('partials/header', { title: 'Programmes' }) %>
+
+<div class="page-header">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; Programmes</div>
+    <div class="eyebrow">What's On</div>
+    <h1>Programmes &amp; Events</h1>
+  </div>
+</div>
+
+<%
+  const _t = new Date(); _t.setHours(0,0,0,0);
+  const isPast = p => p.event_date && new Date(p.event_date + 'T00:00:00') < _t;
+  const upcoming = programmes.filter(p => !isPast(p));
+  const past = programmes.filter(isPast).reverse();
+%>
+<section>
+  <div class="wrap">
+    <% if (!programmes.length) { %>
+    <div class="empty-state reveal">No programmes scheduled yet — check back soon, or follow our News page for announcements.</div>
+    <% } %>
+    <% if (upcoming.length) { %>
+    <div class="events-head reveal"><h2>Upcoming</h2><span><%= upcoming.length %> event<%= upcoming.length === 1 ? '' : 's' %></span></div>
+    <div class="event-grid reveal">
+      <% upcoming.forEach(p => { %><%- include('partials/prog-card', { p }) %><% }) %>
+    </div>
+    <% } else if (programmes.length) { %>
+    <div class="empty-state reveal">No upcoming programmes right now — see what we have done below.</div>
+    <% } %>
+    <% if (past.length) { %>
+    <div class="events-head reveal" style="margin-top:72px;"><h2>Past events</h2><span><%= past.length %> event<%= past.length === 1 ? '' : 's' %></span></div>
+    <div class="event-grid reveal">
+      <% past.forEach(p => { %><%- include('partials/prog-card', { p }) %><% }) %>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

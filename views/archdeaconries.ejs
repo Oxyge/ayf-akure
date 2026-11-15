@@ -1,0 +1,36 @@
+<%- include('partials/header', { title: 'Archdeaconries' }) %>
+
+<div class="page-header">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; Archdeaconries</div>
+    <div class="eyebrow">Across the Diocese</div>
+    <h1>Our Archdeaconries</h1>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <% if (archdeaconries.length) { %>
+    <div class="arch-grid reveal">
+      <% archdeaconries.forEach((a, i) => { %>
+      <div class="arch-card">
+        <a href="/archdeaconries/<%= a.id %>">
+          <% if (a.image_url) { %>
+          <div class="arch-thumb" style="background-image:url('<%= a.image_url %>')"></div>
+          <% } else { %>
+          <%- include('partials/church-art', { variant: i }) %>
+          <% } %>
+        </a>
+        <div class="arch-body">
+          <h4><a href="/archdeaconries/<%= a.id %>"><%= a.name %></a></h4>
+          <p style="font-size:.88rem;"><%= a.location %></p>
+          <a href="/archdeaconries/<%= a.id %>" class="link-arrow">View Details</a>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+    <% } else { %><div class="empty-state reveal">Archdeaconry information coming soon.</div><% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

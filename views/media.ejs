@@ -1,0 +1,70 @@
+<%- include('partials/header', { title: 'Media' }) %>
+
+<div class="page-header">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; Media</div>
+    <div class="eyebrow">Media</div>
+    <h1>Gallery, Videos &amp; Publications</h1>
+  </div>
+</div>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head reveal"><div class="eyebrow">In Pictures</div><h2>Our Gallery</h2></div>
+    <% if (galleryAlbums.length) { %>
+    <div class="folder-grid reveal">
+      <% galleryAlbums.forEach(album => { %>
+      <a href="/gallery/<%= album.slug %>" class="folder-card">
+        <div class="folder-cover" style="background-image:url('<%= album.items[0].image_url %>')">
+          <div class="folder-icon">&#128193;</div>
+        </div>
+        <h4><%= album.name %></h4>
+        <span class="news-date"><%= album.items.length %> photos</span>
+      </a>
+      <% }) %>
+    </div>
+    <% } else { %><div class="empty-state reveal">No photos uploaded yet.</div><% } %>
+  </div>
+</section>
+
+<section id="videos" style="background:var(--paper-dim);">
+  <div class="wrap">
+    <div class="section-head reveal"><div class="eyebrow">Watch</div><h2>Latest Videos on Our Fellowship YouTube</h2></div>
+    <% if (videos.length) { %>
+    <div class="video-grid reveal">
+      <% videos.forEach(v => { %>
+      <div class="video-card">
+        <a href="<%= v.video_url %>" data-video="<%= v.video_url %>">
+          <div class="video-thumb" <% if (v.thumbnail_url) { %>style="background-image:url('<%= v.thumbnail_url %>')"<% } %>><div class="play-btn play-btn-lg">&#9658;</div></div>
+        </a>
+        <h4><%= v.title %></h4>
+        <span class="news-date"><%= new Date(v.published_at).toLocaleDateString('en-GB', { month:'short', year:'numeric' }) %></span>
+      </div>
+      <% }) %>
+    </div>
+    <% } else { %><div class="empty-state reveal">No videos posted yet.</div><% } %>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="wrap">
+    <div class="section-head reveal"><div class="eyebrow">Read</div><h2>Publications</h2></div>
+    <% if (publications.length) { %>
+    <div class="pub-grid reveal">
+      <% publications.forEach(p => { %>
+      <div class="pub-card">
+        <h4><%= p.title %></h4>
+        <p><%= p.description %></p>
+        <div class="pub-actions">
+          <a href="<%= p.file_url %>" target="_blank" rel="noopener" class="btn btn-dark-outline">Read Online</a>
+          <a href="<%= p.file_url %>" download class="btn btn-dark-outline">Download PDF</a>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+    <% } else { %><div class="empty-state reveal">No publications uploaded yet.</div><% } %>
+    <div class="section-foot reveal"><a href="/magazine" class="btn btn-dark-outline">Read the AYF Magazine &rarr;</a></div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

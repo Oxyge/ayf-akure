@@ -1,0 +1,36 @@
+<%- include('partials/header', { title: 'Newsletter' }) %>
+
+<div class="page-header">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; Newsletter</div>
+    <div class="kicker">Stay Connected</div>
+    <h1>AYF Akure Newsletter</h1>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <% if (newsletters.length) { %>
+    <div class="mag-grid reveal">
+      <% newsletters.forEach(n => { %>
+      <div class="mag-card">
+        <div class="mag-cover" <% if (n.cover_image_url) { %>style="background-image:url('<%= n.cover_image_url %>')"<% } %>></div>
+        <h4><%= n.title %></h4>
+        <% if (n.issue_date) { %><div class="news-date"><%= new Date(n.issue_date).toLocaleDateString('en-GB', { month:'long', year:'numeric' }) %></div><% } %>
+        <p style="font-size:.9rem;"><%= n.description %></p>
+        <% if (n.file_url) { %>
+        <div class="pub-actions">
+          <a href="<%= n.file_url %>" target="_blank" rel="noopener" class="btn btn-dark-outline">Read Online</a>
+          <a href="<%= n.file_url %>" download class="btn btn-dark-outline">Download</a>
+        </div>
+        <% } %>
+      </div>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <div class="empty-state reveal">No newsletter issues published yet — check back soon, or add the first issue from the admin dashboard.</div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

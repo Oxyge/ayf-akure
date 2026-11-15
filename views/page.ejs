@@ -1,0 +1,50 @@
+<%- include('partials/header', { title: custom.title }) %>
+<%
+  const safeUrl = (u) => { u = String(u || '').trim(); return /^(https?:\/\/|\/(?!\/)|mailto:|tel:|#)/i.test(u) ? u : '#'; };
+  const ytId = (u) => { const m = String(u || '').match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/); return m ? m[1] : null; };
+  const paras = (t) => String(t || '').split(/\n\s*\n/).map(x => x.trim()).filter(Boolean);
+  const lines = (t) => String(t || '').split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+  const blocks = Array.isArray(custom.blocks) ? custom.blocks : [];
+%>
+<div class="page-header"<% if (custom.cover_url) { %> style="background-image:linear-gradient(rgba(6,40,104,.82),rgba(6,40,104,.82)),url('<%= safeUrl(custom.cover_url) %>');background-size:cover;background-position:center;"<% } %>>
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; <%= custom.title %></div>
+    <h1><%= custom.title %></h1>
+    <% if (custom.intro) { %><p class="page-intro"><%= custom.intro %></p><% } %>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="page-blocks">
+      <% if (!blocks.length) { %><div class="empty-state">This page has no content yet.</div><% } %>
+      <% blocks.forEach(b => { %>
+        <% if (b.type === 'heading') { %>
+          <% if (b.level === 'h3') { %><h3 class="pb-heading reveal"><%= b.text %></h3><% } else { %><h2 class="pb-heading reveal"><%= b.text %></h2><% } %>
+        <% } else if (b.type === 'text') { %>
+          <div class="pb-text reveal"><% paras(b.text).forEach(t => { %><p><%- String(t).split(/\n/).map(l => l.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))).join('<br>') %></p><% }) %></div>
+        <% } else if (b.type === 'list') { %>
+          <% const tag = b.ordered ? 'ol' : 'ul'; %>
+          <<%= tag %> class="pb-list reveal"><% lines(b.text).forEach(l => { %><li><%= l %></li><% }) %></<%= tag %>>
+        <% } else if (b.type === 'image' && b.url) { %>
+          <figure class="pb-image reveal"><img src="<%= safeUrl(b.url) %>" alt="<%= b.caption || '' %>" loading="lazy"><% if (b.caption) { %><figcaption><%= b.caption %></figcaption><% } %></figure>
+        <% } else if (b.type === 'gallery') { %>
+          <div class="pb-gallery reveal"><% lines(b.text).forEach(u => { %><a href="<%= safeUrl(u) %>" target="_blank" rel="noopener"><img src="<%= safeUrl(u) %>" alt="" loading="lazy"></a><% }) %></div>
+        <% } else if (b.type === 'video' && b.url) { %>
+          <div class="pb-video reveal">
+            <% const id = ytId(b.url); if (id) { %><iframe src="https://www.youtube.com/embed/<%= id %>?rel=0" title="Video" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            <% } else { %><video src="<%= safeUrl(b.url) %>" controls playsinline preload="metadata"></video><% } %>
+          </div>
+        <% } else if (b.type === 'quote') { %>
+          <blockquote class="pb-quote reveal"><p><%= b.text %></p><% if (b.author) { %><cite><%= b.author %></cite><% } %></blockquote>
+        <% } else if (b.type === 'button' && b.url) { %>
+          <div class="pb-button reveal"><a class="btn btn-solid" href="<%= safeUrl(b.url) %>"<% if (/^https?:/i.test(b.url)) { %> target="_blank" rel="noopener"<% } %>><%= b.label || 'Learn more' %></a></div>
+        <% } else if (b.type === 'divider') { %>
+          <hr class="pb-divider">
+        <% } %>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

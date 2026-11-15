@@ -1,0 +1,73 @@
+<%- include('partials/header', { title: 'Donate' }) %>
+
+<div class="page-header">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; Donate</div>
+    <div class="kicker">Sow a Seed</div>
+    <h1>Support Our Project</h1>
+  </div>
+</div>
+
+<section class="donate-page">
+  <div class="wrap donate-page-grid reveal">
+    <div>
+      <p class="donate-page-verse">&ldquo;<%= settings.donate_verse %>&rdquo;</p>
+      <p style="color:var(--leaf);font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;"><%= settings.donate_verse_ref %></p>
+      <p style="margin-top:24px;"><%= settings.donate_intro %></p>
+    </div>
+    <% if (settings.donate_photo_url) { %>
+    <div class="donate-page-photo"><img src="<%= settings.donate_photo_url %>" alt=""></div>
+    <% } %>
+  </div>
+</section>
+
+<section style="background:var(--paper-dim);">
+  <div class="wrap">
+    <div class="section-head center reveal"><div class="eyebrow">Bank Transfer</div><h2>AYF Akure Donation Payment Options &amp; Account Details</h2></div>
+    <div class="donate-accordion reveal">
+      <% const accounts = [
+        { label: 'Project Account', bank: settings.donate_project_bank, name: settings.donate_project_account_name, number: settings.donate_project_account_number },
+        { label: 'Main Account', bank: settings.donate_main_bank, name: settings.donate_main_account_name, number: settings.donate_main_account_number },
+        { label: 'Special Account', bank: settings.donate_special_bank, name: settings.donate_special_account_name, number: settings.donate_special_account_number },
+        { label: '$ Dollars (USD)', bank: settings.donate_usd_bank, name: settings.donate_usd_account_name, number: settings.donate_usd_account_number }
+      ]; %>
+      <% accounts.forEach((a, i) => { %>
+      <details class="donate-account-card" <% if (i === 0) { %>open<% } %>>
+        <summary class="donate-account-summary">
+          <span class="acc-head">
+            <span><%= a.label %></span>
+            <% if (a.number) { %><span class="acc-sub"><%= a.bank %></span><% } %>
+          </span>
+          <span class="acc-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          </span>
+        </summary>
+        <div class="donate-account-body">
+          <% if (a.number) { %>
+            <p><strong>Bank:</strong> <%= a.bank %></p>
+            <p><strong>Account Name:</strong> <%= a.name %></p>
+            <p><strong>Account Number:</strong> <%= a.number %></p>
+          <% } else { %>
+            <p style="font-style:italic;">Account details coming soon &mdash; please check back or contact the secretariat.</p>
+          <% } %>
+        </div>
+      </details>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="donate" style="padding-top:80px;">
+  <div class="wrap donate-inner reveal">
+    <div class="eyebrow">Paystack</div>
+    <h2>Prefer to Give Online?</h2>
+    <p>Make your donation quickly and securely using Paystack.</p>
+    <% if (settings.paystack_url) { %>
+      <a href="<%= settings.paystack_url %>" target="_blank" rel="noopener" class="btn btn-solid">Click Here to Donate</a>
+    <% } else { %>
+      <a href="/contact" class="btn btn-solid">Contact Us to Donate</a>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

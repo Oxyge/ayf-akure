@@ -1,0 +1,91 @@
+<%- include('partials/header', { title: 'Contact Us' }) %>
+<%
+  const addr = settings.office_address || '';
+  const mapsLink = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(addr);
+  const mapsEmbed = 'https://maps.google.com/maps?q=' + encodeURIComponent(addr) + '&z=15&output=embed';
+  const heroImg = settings.contact_image_url || settings.history_photo_url || '';
+  const emails = [settings.email_1, settings.email_2, settings.email_3].filter(Boolean);
+  const phones = [settings.phone_1, settings.phone_2, settings.phone_3, settings.phone_4].filter(Boolean);
+  const tel = n => 'tel:' + String(n).replace(/[^+\d]/g, '');
+%>
+
+<div class="contact-hero">
+  <% if (heroImg) { %><div class="contact-hero-img" style="background-image:url('<%= heroImg %>')"></div><% } %>
+  <div class="wrap contact-hero-in">
+    <div class="breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; Contact Us</div>
+    <div class="eyebrow">Our Secretariat</div>
+    <h1>We would love to hear from you</h1>
+    <p class="page-intro">Questions about the fellowship, upcoming programmes, or donations towards our conferences? Reach us any way that is easiest for you.</p>
+  </div>
+</div>
+
+<section class="contact-cards-sec">
+  <div class="wrap">
+    <div class="contact-cards reveal">
+      <a class="cc-card" href="<%= mapsLink %>" target="_blank" rel="noopener">
+        <span class="cc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5a7 7 0 1 0-14 0C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+        <h3>Visit us</h3>
+        <p><%= addr %></p>
+        <span class="cc-link">Open in Google Maps &rarr;</span>
+      </a>
+      <div class="cc-card">
+        <span class="cc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+        <h3>Email us</h3>
+        <% emails.forEach(e => { %><a class="cc-line" href="mailto:<%= e %>"><%= e %></a><% }) %>
+      </div>
+      <div class="cc-card">
+        <span class="cc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+        <h3>Call us</h3>
+        <% phones.forEach(n => { %><a class="cc-line" href="<%= tel(n) %>"><%= n %></a><% }) %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-main">
+  <div class="wrap contact-split reveal">
+    <div class="form-card">
+      <div class="eyebrow">Send a message</div>
+      <h2>Write to the secretariat</h2>
+      <% if (sent) { %><div class="form-success">Thank you — your message has been received. We&rsquo;ll be in touch soon.</div><% } %>
+      <form class="site-form" method="POST" action="/contact">
+        <div class="form-row">
+          <div><label for="fname">Full Name</label><input id="fname" name="full_name" type="text" required placeholder="Your name"></div>
+          <div><label for="femail">Email Address</label><input id="femail" name="email" type="email" required placeholder="you@example.com"></div>
+        </div>
+        <div class="form-row">
+          <div><label for="fphone">Phone Number</label><input id="fphone" name="phone" type="tel" placeholder="Optional"></div>
+          <div><label for="fsubject">Subject</label><input id="fsubject" name="subject" type="text" placeholder="What is this about?"></div>
+        </div>
+        <div>
+          <label for="fmessage">Message</label>
+          <textarea id="fmessage" name="message" required placeholder="How can we help?"></textarea>
+        </div>
+        <div><button type="submit" class="btn btn-solid">Send Message <span aria-hidden="true">&rarr;</span></button></div>
+      </form>
+    </div>
+
+    <div class="map-col">
+      <div class="map-card">
+        <iframe title="Map showing <%= addr %>" src="<%= mapsEmbed %>" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <div class="map-foot">
+          <div>
+            <strong>Diocesan Headquarters</strong>
+            <span><%= addr %></span>
+          </div>
+          <a class="btn btn-solid" href="<%= mapsLink %>" target="_blank" rel="noopener">Get directions</a>
+        </div>
+      </div>
+      <% if (settings.donate_verse) { %>
+      <div class="give-card">
+        <div class="eyebrow">Support Our Project</div>
+        <blockquote><%= settings.donate_verse %></blockquote>
+        <cite><%= settings.donate_verse_ref %></cite>
+        <a href="/donate" class="link-arrow">Give towards our conferences &rarr;</a>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
